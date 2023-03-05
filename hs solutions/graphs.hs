@@ -36,5 +36,6 @@ paths a b g = if a /= b then if a `elem` (map fst g) then let l = map snd $ filt
                 where ap = map . (:)
 
 -- discover a cycle in the graph given a node: cycle 2 [(1,2),(2,3),(1,3),(3,4),(4,2),(5,6)]
-cycle :: (Eq a) => a -> [(a,a)] -> [[a]]
-cycle = (uncurry paths) . f where f n = (,) n n
+cycles :: (Eq a) => a -> [(a,a)] -> [[a]]
+--cycle = (uncurry paths) . f where f n = (,) n n
+cycles n g = let l = map snd $ filter ((==) n . fst) g in map ((:) n) . concatMap (\x -> paths x n g) $ l
