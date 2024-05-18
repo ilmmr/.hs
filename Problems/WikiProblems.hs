@@ -111,6 +111,7 @@ fw n = concat $ intersperse "-" [digits!!digitToInt d | d <- show n]
 -- CP funcs
 splitv :: (a -> b) -> (a -> c) -> a -> (b,c)
 splitv f g x = (f x, g x)
+
 (><) :: (a -> b) -> (c -> d) -> (a,c) -> (b,d)
 f >< g = splitv (f . fst) (g . snd)
 
@@ -162,3 +163,21 @@ sort2 = concat . (map sort) . sort1 . groupBy f . reverse . sort1 where
 insertAt :: a -> [a] -> Int -> [a]
 insertAt c str i = uncurry (++) (ap c (Data.List.splitAt (i-1) str)) where
                    ap = (><) id . (:)
+
+unique :: (Ord a) => [a] -> [a]
+unique = map head . group . sort 
+{- 
+    unique \lst = map head $ group $ sort lst
+    unique \lst = map head . group $ sort lst
+    unique \lst = map head . group . sort $ lst
+    unique      = map head . group . sort 
+-}
+
+splitstr :: (Eq a, Ord a) => [a] -> [a] -> [[a]]
+splitstr str sep = unique . foldr f [[]] $ str
+    where f c acc = if (==) sep . take (length sep) . head $ acc 
+                    then [c] : ((drop (length sep) (head acc)) : tail acc) 
+                    else uncurry (flip (.) tail) . splitv ((:) . ((.) ((:) c) head)) id $ acc
+{- 
+    f \c acc = [c] : ((drop (length sep) (head acc)) : tail acc)
+-}
