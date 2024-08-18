@@ -50,7 +50,7 @@ index = (uncurry (!!) .) . flip split fst . flip (.) snd . (!!)
 -}
 
 calculate :: Matriz Int -> Matriz Int
-calculate m = [[(position_calculation m (x, y)) | x <- [0..rows-1], y <- [0..cols-1]]]
+calculate m = [[(position_calculation m (x, y)) | x <- [0..rows-1]] | y <- [0..cols-1]]
   where
     rows = snd . matrix_size $ m
     cols = fst . matrix_size $ m
