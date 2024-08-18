@@ -33,7 +33,7 @@ around (x,y) n = filter ( f n ) . concat $ [
   return (x-1,y),
   return (x+1,y),
   return (x,y+1),
-  return (x,y-1)] where f n = (\p -> p >= (0,0) && fst p < n && snd p < n)
+  return (x,y-1)] where f n = (\p -> fst p >= 0 && fst p < n && snd p >= 0 && snd p < n)
 
 update :: [Par Int] -> Matriz Int -> Matriz Int
 update [] matrix   = matrix
