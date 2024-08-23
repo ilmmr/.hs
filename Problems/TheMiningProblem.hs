@@ -1,6 +1,6 @@
 {- ---------- The Mining Problem ---------- -}
 {- ---------------------------------------- -}
-module Mining ( main, teste ) where
+module Mining ( test ) where
 import Data.List
 import Data.Tuple
 
@@ -75,5 +75,5 @@ main = (flip (.) create .) . (build .) . zip
   main      = (flip (.) create .) . (build .) . zip
 -}
 
-{- ----- run test in ghci ----- -}
-teste = main [1,2] [2,1] 3
+{- ----- run "test" in ghci ----- -}
+test = main [1,2] [2,1] 3
