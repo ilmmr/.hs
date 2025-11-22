@@ -1,1 +1,2 @@
-* Mining Problem: simple mining map creation, with placement of bombs around the map.
+### Mining Problem 
+Simple mining map creation, with placement of bombs around the map.
