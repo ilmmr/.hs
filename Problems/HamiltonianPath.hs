@@ -50,7 +50,6 @@ choice = uncurry (++)
 {- For each node a in ns, if a is not already in p the function
    creates a new path by adding to the end of p the element a.
 -}
--- !! To implement !!
 addtoEnd :: Path -> [Node] -> [Path]
 addtoEnd p ns = ns >>= (\n -> if adj(n, last p) && not (elem n p) then return $ p ++ [n] else [])
 
@@ -58,19 +57,14 @@ addtoEndFolded :: Path -> [Node] -> [Path]
 addtoEndFolded p = foldr (\a b -> if not (elem a p) && adj(a,last p) then (p ++ [a]) : b else b) []
 
 -- Computes all Hamiltonian cycles starting from a given node
--- !! To implement !!
 hCycles :: Node -> [Path]
 hCycles n = addtoEnd [n] allNodes >>= hCyclesAux where
   hCyclesAux p | ended p = bool [] (return $ p ++ [head p]) $ adj (head p, last p)
                | otherwise = addtoEnd p allNodes >>= hCyclesAux
   ended p = sort p == sort allNodes
 
-{-
-Alternative version
-
 hCyclesPF :: Node -> [Path]
 hCyclesPF = addHead <$> removeNonAdj <$> flip (foldM $ flip ($)) expansions . return where
     addHead = map $ choice . (id &&& (return . head))
     removeNonAdj = filter $ adj . (head &&& last)
     expansions = replicate (length allNodes - 1) $ flip addtoEnd allNodes
--}
